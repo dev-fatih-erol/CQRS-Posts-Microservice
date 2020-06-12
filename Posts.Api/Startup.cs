@@ -1,11 +1,14 @@
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Posts.Application.Configurations;
 using Posts.Infrastructure;
 using Posts.Infrastructure.Configurations;
+using Posts.Infrastructure.Repositories;
 
 namespace Posts.Api
 {
@@ -25,6 +28,11 @@ namespace Posts.Api
             services.AddSingleton<IMongoConfiguration>(o => o.GetRequiredService<IOptions<MongoConfiguration>>().Value);
 
             services.AddSingleton<PostDbContext>();
+
+            services.AddTransient<IPostRepository, PostRepository>();
+
+            services.AddApplication()
+                    .AddMediatR(typeof(ApplicationServiceExtensions).Assembly);
 
             services.AddControllers();
         }
