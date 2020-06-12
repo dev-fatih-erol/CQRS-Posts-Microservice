@@ -7,7 +7,7 @@ namespace Posts.Application.Configurations
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services .AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehaviour<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehaviour<,>));
 
             return services;
         }
