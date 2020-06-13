@@ -7,8 +7,9 @@ using MediatR;
 
 namespace Posts.Application.Configurations
 {
-    public class ValidationPipelineBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-        where TRequest : IRequest<TResponse>
+    public class ValidationPipelineBehaviour<TRequest, TResponse>
+        : IPipelineBehavior<TRequest, TResponse> where TRequest
+        : IRequest<TResponse>
     {
         private readonly IEnumerable<IValidator<TRequest>> _validators;
 
@@ -20,15 +21,15 @@ namespace Posts.Application.Configurations
         public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
             var context = new ValidationContext(request);
-            var failures = _validators
-                .Select(x => x.Validate(context))
-                .SelectMany(x => x.Errors)
-                .Where(x => x != null)
+            var errors = _validators
+                .Select(e => e.Validate(context))
+                .SelectMany(e => e.Errors)
+                .Where(e => e != null)
                 .ToList();
 
-            if (failures.Any())
+            if (errors.Any())
             {
-                throw new ValidationException(failures);
+                throw new ValidationException(errors);
             }
 
             return next();
