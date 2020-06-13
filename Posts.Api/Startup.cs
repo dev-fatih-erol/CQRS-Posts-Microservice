@@ -31,8 +31,9 @@ namespace Posts.Api
 
             services.AddTransient<IPostRepository, PostRepository>();
 
-            services.AddApplication()
-                    .AddMediatR(typeof(ApplicationServiceExtensions).Assembly);
+            services
+                .AddApplication()
+                .AddMediatR(typeof(ApplicationServiceExtensions).Assembly);
 
             services.AddControllers();
         }
