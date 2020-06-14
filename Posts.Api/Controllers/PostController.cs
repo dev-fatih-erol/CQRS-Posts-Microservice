@@ -15,6 +15,13 @@ namespace Posts.Api.Controllers
         }
 
         [HttpGet]
+        [Route("User/{userId:int}/Post")]
+        public async Task<IActionResult> GetByUserId([FromRoute]int userId, [FromQuery]int pageIndex = 1)
+        {
+            return Ok(await _mediator.Send(new GetByUserIdQuery(userId, pageIndex)));
+        }
+
+        [HttpGet]
         [Route("Post/{id:length(24)}")]
         public async Task<IActionResult> GetById([FromRoute]string id)
         {
