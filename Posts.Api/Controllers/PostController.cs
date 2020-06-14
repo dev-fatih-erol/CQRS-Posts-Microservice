@@ -25,7 +25,7 @@ namespace Posts.Api.Controllers
         [Route("Post/{id:length(24)}")]
         public async Task<IActionResult> GetById([FromRoute]string id)
         {
-            var post = await _mediator.Send(new GetPostByIdQuery(id));
+            var post = await _mediator.Send(new GetByIdQuery(id));
 
             if (post != null)
             {
