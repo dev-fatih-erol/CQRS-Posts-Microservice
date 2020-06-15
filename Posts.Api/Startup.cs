@@ -8,7 +8,7 @@ using Microsoft.Extensions.Options;
 using Posts.Application.Configurations;
 using Posts.Infrastructure;
 using Posts.Infrastructure.Configurations;
-using Posts.Infrastructure.Repositories;
+using Posts.Infrastructure.Services;
 
 namespace Posts.Api
 {
@@ -29,7 +29,7 @@ namespace Posts.Api
 
             services.AddSingleton<PostDbContext>();
 
-            services.AddTransient<IPostRepository, PostRepository>();
+            services.AddTransient<IPostService, PostService>();
 
             services
                 .AddApplication()

@@ -3,22 +3,22 @@ using System.Threading.Tasks;
 using MediatR;
 using Posts.Application.Queries;
 using Posts.Infrastructure.Entities;
-using Posts.Infrastructure.Repositories;
+using Posts.Infrastructure.Services;
 
 namespace Posts.Application.Handlers
 {
     public class GetByIdHandler : IRequestHandler<GetByIdQuery, Post>
     {
-        private readonly IPostRepository _postRepository;
+        private readonly IPostService _postService;
 
-        public GetByIdHandler(IPostRepository postRepository)
+        public GetByIdHandler(IPostService postService)
         {
-            _postRepository = postRepository;
+            _postService = postService;
         }
 
         public async Task<Post> Handle(GetByIdQuery request, CancellationToken cancellationToken)
         {
-            return await _postRepository.GetById(request.Id);
+            return await _postService.GetById(request.Id);
         }
     }
 }

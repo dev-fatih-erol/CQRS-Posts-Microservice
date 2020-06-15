@@ -1,0 +1,32 @@
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using MongoDB.Driver;
+using Posts.Infrastructure.Entities;
+
+namespace Posts.Infrastructure.Services
+{
+    public class PostService : IPostService
+    {
+        private readonly PostDbContext _dbContext;
+
+        public PostService(PostDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
+        public async Task<List<Post>> GetByUserId(int userId, int skip, int limit)
+        {
+            return await _dbContext.Posts
+                .Find(p => p.User.Id == userId)
+                .SortByDescending(p => p.CreatedDate)
+                .Skip((skip - 1) * limit)
+                .Limit(limit)
+                .ToListAsync();
+        }
+
+        public async Task<Post> GetById(string id)
+        {
+            return await _dbContext.Posts.Find(p => p.Id == id).FirstOrDefaultAsync();
+        }
+    }
+}
