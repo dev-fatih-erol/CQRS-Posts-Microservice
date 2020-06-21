@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using MongoDB.Driver.Linq;
 using Posts.Infrastructure.Entities;
 
 namespace Posts.Infrastructure.Services
 {
     public interface IPostService
     {
-        Task<List<Post>> GetByUserId(int userId, int skip, int limit);
+        IMongoQueryable<Post> GetByUserId(int userId);
 
         Task<Post> GetById(string id);
     }

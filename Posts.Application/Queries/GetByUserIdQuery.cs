@@ -14,10 +14,7 @@ namespace Posts.Application.Queries
         {
             UserId = userId;
 
-            if (pageIndex < 1)
-                PageIndex = 1;
-            else
-                PageIndex = pageIndex;
+            PageIndex = pageIndex < 1 ? 1 : pageIndex;
         }
     }
 }

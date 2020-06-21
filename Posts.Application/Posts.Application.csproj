@@ -13,6 +13,7 @@
     <Folder Include="Queries\" />
     <Folder Include="Handlers\" />
     <Folder Include="Configurations\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Posts.Infrastructure\Posts.Infrastructure.csproj" />

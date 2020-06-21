@@ -2,6 +2,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using MongoDB.Driver.Linq;
+using Posts.Application.Helpers;
 using Posts.Application.Queries;
 using Posts.Infrastructure.Entities;
 using Posts.Infrastructure.Services;
@@ -19,8 +21,15 @@ namespace Posts.Application.Handlers
 
         public async Task<List<Post>> Handle(GetByUserIdQuery request, CancellationToken cancellationToken)
         {
+            var query = _postService.GetByUserId(request.UserId);
+            var posts = from p in query
+                        orderby p.CreatedDate descending
+                        select p;
+
             var pageSize = 5;
-            return await _postService.GetByUserId(request.UserId, request.PageIndex, pageSize);
+            var paginatedPosts = await PaginatedList<Post>.CreateAsync(posts, request.PageIndex, pageSize);
+
+            return paginatedPosts;
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 using Posts.Infrastructure.Entities;
 
 namespace Posts.Infrastructure.Services
@@ -14,14 +14,9 @@ namespace Posts.Infrastructure.Services
             _dbContext = dbContext;
         }
 
-        public async Task<List<Post>> GetByUserId(int userId, int skip, int limit)
+        public IMongoQueryable<Post> GetByUserId(int userId)
         {
-            return await _dbContext.Posts
-                .Find(p => p.User.Id == userId)
-                .SortByDescending(p => p.CreatedDate)
-                .Skip((skip - 1) * limit)
-                .Limit(limit)
-                .ToListAsync();
+            return _dbContext.Posts.AsQueryable().Where(p => p.User.Id == userId);
         }
 
         public async Task<Post> GetById(string id)
