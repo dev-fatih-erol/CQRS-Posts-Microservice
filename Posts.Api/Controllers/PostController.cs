@@ -18,7 +18,7 @@ namespace Posts.Api.Controllers
         [Route("User/{userId:int}/Post")]
         public async Task<IActionResult> GetByUserId([FromRoute]int userId, [FromQuery]int pageIndex = 1)
         {
-            return Ok(await _mediator.Send(new GetByUserIdQuery(userId, pageIndex)));
+            return Ok(await _mediator.Send(new GetPostByUserIdQuery(userId, pageIndex)));
         }
 
         [HttpGet]
