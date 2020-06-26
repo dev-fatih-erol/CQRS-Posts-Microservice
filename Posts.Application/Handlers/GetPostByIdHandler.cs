@@ -1,24 +1,33 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using MediatR;
+using Posts.Application.Dtos;
 using Posts.Application.Queries;
-using Posts.Infrastructure.Entities;
 using Posts.Infrastructure.Services;
 
 namespace Posts.Application.Handlers
 {
-    public class GetPostByIdHandler : IRequestHandler<GetPostByIdQuery, Post>
+    public class GetPostByIdHandler : IRequestHandler<GetPostByIdQuery, PostDto>
     {
+        private readonly IMapper _mapper;
+
         private readonly IPostService _postService;
 
-        public GetPostByIdHandler(IPostService postService)
+        public GetPostByIdHandler(IMapper mapper, IPostService postService)
         {
+            _mapper = mapper;
+
             _postService = postService;
         }
 
-        public async Task<Post> Handle(GetPostByIdQuery request, CancellationToken cancellationToken)
+        public async Task<PostDto> Handle(GetPostByIdQuery request, CancellationToken cancellationToken)
         {
-            return await _postService.GetById(request.Id);
+            var post = await _postService.GetById(request.Id);
+
+            var response = _mapper.Map<PostDto>(post);
+
+            return response;
         }
     }
 }

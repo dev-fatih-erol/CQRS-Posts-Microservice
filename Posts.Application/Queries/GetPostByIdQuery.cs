@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using Posts.Infrastructure.Entities;
+using Posts.Application.Dtos;
 
 namespace Posts.Application.Queries
 {
-    public class GetPostByIdQuery : IRequest<Post>
+    public class GetPostByIdQuery : IRequest<PostDto>
     {
         public string Id { get; }
 
