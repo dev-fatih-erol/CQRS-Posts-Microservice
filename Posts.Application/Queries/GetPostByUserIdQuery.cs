@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using MediatR;
-using Posts.Infrastructure.Entities;
+﻿using MediatR;
+using Posts.Application.Dtos;
 
 namespace Posts.Application.Queries
 {
-    public class GetPostByUserIdQuery : IRequest<List<Post>>
+    public class GetPostByUserIdQuery : IRequest<PaginatedListDto<PostDto>>
     {
         public int UserId { get; }
 
