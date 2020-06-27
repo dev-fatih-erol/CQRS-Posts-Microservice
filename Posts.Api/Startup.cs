@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using Posts.Application.Configurations;
 using Posts.Infrastructure;
 using Posts.Infrastructure.Configurations;
@@ -35,7 +36,9 @@ namespace Posts.Api
                 .AddApplication()
                 .AddMediatR(typeof(ApplicationServiceExtensions).Assembly);
 
-            services.AddControllers();
+            services
+                .AddControllers()
+                .AddNewtonsoftJson(o => o.SerializerSettings.NullValueHandling = NullValueHandling.Ignore);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

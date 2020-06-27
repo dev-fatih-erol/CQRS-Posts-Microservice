@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Posts.Application.Commands;
 using Posts.Application.Queries;
 
 namespace Posts.Api.Controllers
@@ -33,6 +34,15 @@ namespace Posts.Api.Controllers
             }
 
             return NotFound();
+        }
+
+        [HttpPost]
+        [Route("Post")]
+        public async Task<IActionResult> Create([FromBody]CreatePostCommand command)
+        {
+            var post = await _mediator.Send(command);
+
+            return Created($"Post/{post.Id}", post);
         }
     }
 }
