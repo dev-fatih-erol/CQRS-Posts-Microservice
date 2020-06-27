@@ -16,6 +16,7 @@
     <Folder Include="Configurations\" />
     <Folder Include="Helpers\" />
     <Folder Include="Dtos\" />
+    <Folder Include="Commands\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Posts.Infrastructure\Posts.Infrastructure.csproj" />

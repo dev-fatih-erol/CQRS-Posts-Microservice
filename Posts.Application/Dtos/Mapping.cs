@@ -16,6 +16,12 @@ namespace Posts.Application.Dtos
 
             CreateMap<Video, VideoDto>();
 
+            CreateMap<UserDto, User>();
+
+            CreateMap<PhotoDto, Photo>();
+
+            CreateMap<VideoDto, Video>();
+
             CreateMap<PaginatedList<Post>, PaginatedListDto<PostDto>>()
                 .ForMember(d => d.PageIndex, s => s.MapFrom(s => s.PageIndex))
                 .ForMember(d => d.TotalPages, s => s.MapFrom(s => s.TotalPages))
