@@ -23,5 +23,10 @@ namespace Posts.Infrastructure.Services
         {
             return await _dbContext.Posts.Find(p => p.Id == id).FirstOrDefaultAsync();
         }
+
+        public async Task Create(Post post)
+        {
+            await _dbContext.Posts.InsertOneAsync(post);
+        }
     }
 }
