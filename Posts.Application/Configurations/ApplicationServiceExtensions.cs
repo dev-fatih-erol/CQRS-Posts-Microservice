@@ -12,6 +12,7 @@ namespace Posts.Application.Configurations
             var mapperConfiguration = new MapperConfiguration(o =>
             {
                 o.AllowNullCollections = true;
+                o.AllowNullDestinationValues = true;
                 o.AddProfile(new Mapping());
             });
 

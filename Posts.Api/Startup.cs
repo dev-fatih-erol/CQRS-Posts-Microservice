@@ -1,3 +1,4 @@
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,7 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using Posts.Api.Filters;
 using Posts.Application.Configurations;
+using Posts.Application.Validators;
 using Posts.Infrastructure;
 using Posts.Infrastructure.Configurations;
 using Posts.Infrastructure.Services;
@@ -37,8 +40,9 @@ namespace Posts.Api
                 .AddMediatR(typeof(ApplicationServiceExtensions).Assembly);
 
             services
-                .AddControllers()
-                .AddNewtonsoftJson(o => o.SerializerSettings.NullValueHandling = NullValueHandling.Ignore);
+                .AddControllers(o => o.Filters.Add(typeof(GlobalExceptionFilter)))
+                .AddNewtonsoftJson(o => o.SerializerSettings.NullValueHandling = NullValueHandling.Ignore)
+                .AddFluentValidation(o => o.RegisterValidatorsFromAssemblyContaining<CreatePostValidator>());
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
