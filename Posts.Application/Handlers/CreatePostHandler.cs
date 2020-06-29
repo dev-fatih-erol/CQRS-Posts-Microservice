@@ -29,7 +29,7 @@ namespace Posts.Application.Handlers
             var post = new Post();
             var user = _mapper.Map<User>(request.User);
             post.User = user;
-            post.Text = post.Text;
+            post.Text = request.Text;
             var photos = _mapper.Map<List<Photo>>(request.Photos);
             post.Photos = photos;
             var videos = _mapper.Map<List<Video>>(request.Videos);
