@@ -18,13 +18,13 @@ namespace Posts.Application.Validators
 
             RuleFor(p => p.Photos)
                 .Must(p => p != null && p.Any())
-                .When(p => p.Videos == null || !p.Videos.Any())
-                .WithMessage("No {PropertyName} found.");
+                .WithMessage("No {PropertyName} found.")
+                .When(p => p.Videos == null || !p.Videos.Any());
 
             RuleFor(p => p.Videos)
                 .Must(p => p != null && p.Any())
-                .When(p => p.Photos == null || !p.Photos.Any())
-                .WithMessage("No {PropertyName} found.");
+                .WithMessage("No {PropertyName} found.")
+                .When(p => p.Photos == null || !p.Photos.Any());
         }
     }
 }
