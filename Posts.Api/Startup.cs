@@ -1,5 +1,4 @@
 using FluentValidation.AspNetCore;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -33,12 +32,10 @@ namespace Posts.Api
 
             services.AddSingleton<PostDbContext>();
 
-            services.AddTransient<IPostService, PostService>();
+            services.AddSingleton<IPostService, PostService>();
 
-            services
-                .AddApplication()
-                .AddMediatR(typeof(ApplicationServiceExtensions).Assembly);
-
+            services.AddApplication();
+                
             services
                 .AddControllers(o => o.Filters.Add(typeof(GlobalExceptionFilter)))
                 .AddNewtonsoftJson(o => o.SerializerSettings.NullValueHandling = NullValueHandling.Ignore)

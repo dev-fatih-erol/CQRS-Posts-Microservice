@@ -17,9 +17,12 @@ namespace Posts.Application.Configurations
             });
 
             var mapper = mapperConfiguration.CreateMapper();
+
             services.AddSingleton(mapper);
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehaviour<,>));
+
+            services.AddMediatR(typeof(ApplicationServiceExtensions).Assembly);
 
             return services;
         }
