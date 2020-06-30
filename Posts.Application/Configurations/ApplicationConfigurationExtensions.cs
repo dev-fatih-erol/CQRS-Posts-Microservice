@@ -5,7 +5,7 @@ using Posts.Application.Dtos;
 
 namespace Posts.Application.Configurations
 {
-    public static class ApplicationServiceExtensions
+    public static class ApplicationConfigurationExtensions
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
@@ -22,7 +22,7 @@ namespace Posts.Application.Configurations
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehaviour<,>));
 
-            services.AddMediatR(typeof(ApplicationServiceExtensions).Assembly);
+            services.AddMediatR(typeof(ApplicationConfigurationExtensions).Assembly);
 
             return services;
         }
