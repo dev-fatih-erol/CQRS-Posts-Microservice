@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using MediatR;
 using Posts.Application.Dtos;
+using Posts.Application.Extensions;
 
 namespace Posts.Application.Commands
 {
@@ -18,7 +19,7 @@ namespace Posts.Application.Commands
         {
             User = user;
 
-            Text = text;
+            Text = text.Clear();
 
             Photos = photos;
 

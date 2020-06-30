@@ -9,8 +9,8 @@ namespace Posts.Application.Validators
         public CreatePostValidator()
         {
             RuleFor(p => p.Text)
-                .Length(1, 300)
-                .WithMessage("{PropertyName} must be between {MinLength} and {MaxLength} characters.");
+                .MaximumLength(300)
+                .WithMessage("{PropertyName} must be at most {MaxLength} characters long.");
 
             RuleFor(p => p.User)
                 .NotNull()
