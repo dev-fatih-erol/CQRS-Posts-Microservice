@@ -19,9 +19,19 @@ namespace Posts.Infrastructure.Services
             return _dbContext.Posts.AsQueryable().Where(p => p.User.Id == userId);
         }
 
+        public async Task<Post> GetById(string id, int userId)
+        {
+            return await _dbContext.Posts.Find(p => p.Id == id && p.User.Id == userId).FirstOrDefaultAsync();
+        }
+
         public async Task<Post> GetById(string id)
         {
             return await _dbContext.Posts.Find(p => p.Id == id).FirstOrDefaultAsync();
+        }
+
+        public async Task Delete(string id)
+        {
+            await _dbContext.Posts.DeleteOneAsync(p => p.Id == id);
         }
 
         public async Task Create(Post post)

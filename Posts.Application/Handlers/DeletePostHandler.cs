@@ -2,39 +2,38 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
-using Posts.Application.Dtos;
+using Posts.Application.Commands;
 using Posts.Application.Exceptions;
-using Posts.Application.Queries;
 using Posts.Infrastructure.Entities;
 using Posts.Infrastructure.Services;
 
 namespace Posts.Application.Handlers
 {
-    public class GetPostByIdHandler : IRequestHandler<GetPostByIdQuery, PostDto>
+    public class DeletePostHandler : IRequestHandler<DeletePostCommand, Unit>
     {
         private readonly IMapper _mapper;
 
         private readonly IPostService _postService;
 
-        public GetPostByIdHandler(IMapper mapper, IPostService postService)
+        public DeletePostHandler(IMapper mapper, IPostService postService)
         {
             _mapper = mapper;
 
             _postService = postService;
         }
 
-        public async Task<PostDto> Handle(GetPostByIdQuery request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeletePostCommand request, CancellationToken cancellationToken)
         {
-            var post = await _postService.GetById(request.Id);
+            var post = await _postService.GetById(request.Id, request.UserId);
 
             if (post == null)
             {
                 throw new NotFoundException(nameof(Post));
             }
 
-            var response = _mapper.Map<PostDto>(post);
+            await _postService.Delete(post.Id);
 
-            return response;
+            return Unit.Value;
         }
     }
 }

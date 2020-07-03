@@ -26,14 +26,17 @@ namespace Posts.Api.Controllers
         [Route("Post/{id:length(24)}")]
         public async Task<IActionResult> GetById([FromRoute]string id)
         {
-            var post = await _mediator.Send(new GetPostByIdQuery(id));
+            return Ok(await _mediator.Send(new GetPostByIdQuery(id)));
+        }
 
-            if (post != null)
-            {
-                return Ok(post);
-            }
+        [HttpDelete]
+        [Route("Post/{id:length(24)}")]
+        public async Task<IActionResult> Delete([FromRoute]string id)
+        {
+            int userId = 3;
+            await _mediator.Send(new DeletePostCommand(id, userId));
 
-            return NotFound();
+            return NoContent();
         }
 
         [HttpPost]
