@@ -8,11 +8,9 @@ namespace Posts.Infrastructure.Services
     {
         IMongoQueryable<Post> GetByUserId(int userId);
 
-        Task<Post> GetById(string id, int userId);
-
         Task<Post> GetById(string id);
 
-        Task Delete(string id);
+        Task<Post> Delete(string id, int userId);
 
         Task Create(Post post);
     }
